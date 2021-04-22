@@ -85,13 +85,13 @@ $().ready(function () {
                     loanTransactionsData = response.loanTransactions;
                     fillLoanTransactionsTable(response);
 
-                   /* $("#loanTransactionsTable").dataTable({
-                        "pagingType": "numbers",
-                        "pageLength": 10,
-                        "sortable": "false",
-                        "ordering": "false",
-                        "searching": "false"
-                    });*/
+                    $("#loanTransactionsTable").fancyTable({
+                        pagination: "true",
+                        perPage: "10",
+                        sortable: "false",
+                        searchable: "false",
+                        globalSearch: false
+                    });
 
                     $("#postBackButton").removeAttr("disabled");
                     $("#loanTransactionsTable").removeClass("displayNone");
@@ -131,6 +131,6 @@ function fillLoanTransactionsTable(data) {
 
         $("#loanTransactionsTable").append(row);
     }
-
+    
 
 }
