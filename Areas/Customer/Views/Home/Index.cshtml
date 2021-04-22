@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-4">
-        
+
         <form id="userInput" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -42,10 +42,10 @@
                 <span asp-validation-for="emi" class="text-danger"></span>
             </div>
             <button type="button" id="getDetailsBtn" class="btn btn-primary">Get Details</button>
-            <button id="postBackButton" type="submit" disabled class="btn btn-success">Save To Database</button>
+            <button id="postBackButton" type="button" disabled class="btn btn-success">Save To Database</button>
 
         </form>
-        
+
     </div>
 
     <div class="col">
@@ -67,17 +67,19 @@
 
         </table>
             -->
-        
+
         <table id="loanTransactionsTable" class="displayNone table table-sm table-bordered">
-            <tr class="bg-dark text-white">
-                <th style="width:10px">Installment</th>
-                <th>Opening</th>
-                <th>Principal</th>
-                <th>Interest</th>
-                <th>EMI</th>
-                <th>Closing</th>
-                <th>Cummulative Interest</th>
-            </tr>
+            <thead>
+                <tr class="bg-dark text-white">
+                    <th style="width:10px">Installment</th>
+                    <th>Opening</th>
+                    <th>Principal</th>
+                    <th>Interest</th>
+                    <th>EMI</th>
+                    <th>Closing</th>
+                    <th>Cummulative Interest</th>
+                </tr>
+            </thead>
         </table>
     </div>
 </div>
@@ -85,5 +87,6 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+  
     <script src="~/js/index.js" defer></script>
 }

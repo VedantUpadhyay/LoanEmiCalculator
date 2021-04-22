@@ -1,5 +1,7 @@
-﻿using LoanEmiCalculator.Models;
+﻿using LoanEmiCalculator.Data;
+using LoanEmiCalculator.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -13,10 +15,21 @@ namespace LoanEmiCalculator.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
         {
             _logger = logger;
+            _db = db;
+        }
+
+        public bool IsLoanInputEmpty(LoanInput UserInput)
+        {
+            if(UserInput.emi != 0 && UserInput.LoanAmount != 0 && UserInput.MonthlyRateOfInterest != 0 && UserInput.NoOfInstallments != 0 && UserInput.RateOfInterest != 0)
+            {
+                return true;
+            }
+            return false;
         }
 
 
@@ -27,13 +40,25 @@ namespace LoanEmiCalculator.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(LoanInput loanInput)
+        public IActionResult Index(LoanInput loanInput,List<LoanTransaction> LoanTransactions)
         {
-            loanInput.MonthlyRateOfInterest = loanInput.RateOfInterest / 1200;
-
+           // loanInput.MonthlyRateOfInterest = loanInput.RateOfInterest / 1200;
+            /*
             loanInput.emi = loanInput.LoanAmount * ((loanInput.MonthlyRateOfInterest * Math.Pow((1 + loanInput.MonthlyRateOfInterest), loanInput.NoOfInstallments * 12)) / (Math.Pow(1 + loanInput.MonthlyRateOfInterest, loanInput.NoOfInstallments * 12) - 1));
-
+            */
             
+            if(!IsLoanInputEmpty(loanInput))
+            {
+                var inputFromDb = _db.LoanInputs.Find(loanInput.LoanAmount, loanInput.RateOfInterest, loanInput.NoOfInstallments);
+                if (inputFromDb != null)
+                {
+                    _db.LoanInputs.Add(loanInput);
+                    _db.SaveChanges();
+
+
+                }
+            }
+
             return View();
         }
 

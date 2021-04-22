@@ -5,6 +5,9 @@ var monthlyRoi;
 var emiCalculated;
 var validateFlag = false;
 
+var loanUserInput;
+var loanTransactionsData;
+
 $().ready(function () {
     $("input").each(function (index, elem) {
         $(elem).removeAttr("value");
@@ -25,14 +28,36 @@ $().ready(function () {
             monthlyRoi = roi / (1200);
             $("#MonthlyRateOfInterest").val(monthlyRoi);
             $("#EMI").removeAttr("disabled");
-           // emiCalculated = loanAmount * monthlyRoi * (1 + monthlyRoi) 
-            emiCalculated = loanAmount *( (monthlyRoi * Math.pow(( 1+ monthlyRoi),noi*12))/(Math.pow(1 + monthlyRoi,noi*12) - 1));
+            // emiCalculated = loanAmount * monthlyRoi * (1 + monthlyRoi) 
+            emiCalculated = loanAmount * ((monthlyRoi * Math.pow((1 + monthlyRoi), noi * 12)) / (Math.pow(1 + monthlyRoi, noi * 12) - 1));
             $("#emi").val(emiCalculated);
             $("#loanSummaryTable").removeClass("displayNone");
         }
+        else {
+            $("#postBackButton").attr("disabled", "true");
+        }
     });
+    
 
+    $('.dataTables_length').addClass('bs-select');
 
+    $("#postBackButton").click(function () {
+        $.ajax({
+            method: 'post',
+            url: '/Customer/Home/Index',
+            data: {
+                'loanAmount': loanAmount,
+                'rateOfInterest': roi,
+                'noOfInstallments': noi * 12,
+                'monthlyRateOfInterest': monthlyRoi,
+                'emi': emiCalculated,
+                'loanTransactions': loanTransactionsData
+            },
+            success: function (response) {
+                console.log(response);
+            }
+        });
+    });
 
     $("#getDetailsBtn").click(function () {
         if (validateFlag) {
@@ -49,10 +74,29 @@ $().ready(function () {
                 },
                 success: function (response) {
 
+                    loanUserInput = {
+                        'loanAmount': loanAmount,
+                        'rateOfInterest': roi,
+                        'noOfInstallments': noi * 12,
+                        'monthlyRateOfInterest': monthlyRoi,
+                        'emi': emiCalculated
+                    };
+
+                    loanTransactionsData = response.loanTransactions;
                     fillLoanTransactionsTable(response);
+
+                   /* $("#loanTransactionsTable").dataTable({
+                        "pagingType": "numbers",
+                        "pageLength": 10,
+                        "sortable": "false",
+                        "ordering": "false",
+                        "searching": "false"
+                    });*/
+
                     $("#postBackButton").removeAttr("disabled");
                     $("#loanTransactionsTable").removeClass("displayNone");
-                    console.log(response);
+                    console.log(typeof (response.loanTransactions));
+                    console.log(response.loanTransactions);
                 }
             });
         }
