@@ -1,0 +1,59 @@
+﻿@model LoanInput
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+<div class="row">
+    <div class="col-5">
+        
+        <form id="userInput">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="LoanAmount"></label>
+                <input type="number" class="form-control" asp-for="LoanAmount">
+                <span asp-validation-for="LoanAmount" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RateOfInterest"></label>
+                <input type="number" class="form-control" asp-for="RateOfInterest">
+                <span asp-validation-for="RateOfInterest" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NoOfInstallments"></label>
+                <input type="number" class="form-control" asp-for="NoOfInstallments">
+                <span asp-validation-for="NoOfInstallments" class="text-danger"></span>
+            </div>
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MonthlyRateOfInterest"></label>
+                <input type="number" class="form-control w-50" disabled asp-for="MonthlyRateOfInterest">
+                <span asp-validation-for="MonthlyRateOfInterest" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="EMI"></label>
+                <input type="number" class="form-control w-50" disabled asp-for="EMI">
+                <span asp-validation-for="EMI" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        
+    </div>
+
+    <div class="col-sm ml-xl-5 pl-xl-5">
+        <h3>Loan Summary</h3>
+        
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/index.js" defer></script>
+}

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using LoanEmiCalculator.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,7 @@ namespace LoanEmiCalculator.Data
             : base(options)
         {
         }
+
+        public DbSet<LoanInput> LoanInputs { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace LoanEmiCalculator.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -18,9 +19,11 @@ namespace LoanEmiCalculator.Controllers
             _logger = logger;
         }
 
+
         public IActionResult Index()
         {
-            return View();
+            LoanInput LoanInput = new LoanInput();
+            return View(LoanInput);
         }
 
         public IActionResult Privacy()
