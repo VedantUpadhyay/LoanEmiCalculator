@@ -4,14 +4,16 @@ using LoanEmiCalculator.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LoanEmiCalculator.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210422120328_EmiNameChange")]
+    partial class EmiNameChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,44 +46,6 @@ namespace LoanEmiCalculator.Data.Migrations
                     b.HasKey("Key");
 
                     b.ToTable("LoanInputs");
-                });
-
-            modelBuilder.Entity("LoanEmiCalculator.Models.LoanTransaction", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<double>("Closing")
-                        .HasColumnType("float");
-
-                    b.Property<double>("CummulativeInterest")
-                        .HasColumnType("float");
-
-                    b.Property<int>("InstallmentNo")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Interest")
-                        .HasColumnType("float");
-
-                    b.Property<int>("LoanId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Opening")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Principal")
-                        .HasColumnType("float");
-
-                    b.Property<double>("emi")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LoanId");
-
-                    b.ToTable("LoanTransactions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -282,17 +246,6 @@ namespace LoanEmiCalculator.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("LoanEmiCalculator.Models.LoanTransaction", b =>
-                {
-                    b.HasOne("LoanEmiCalculator.Models.LoanInput", "LoanInput")
-                        .WithMany()
-                        .HasForeignKey("LoanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("LoanInput");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

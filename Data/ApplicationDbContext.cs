@@ -15,5 +15,7 @@ namespace LoanEmiCalculator.Data
         }
 
         public DbSet<LoanInput> LoanInputs { get; set; }
+
+        public DbSet<LoanTransaction> LoanTransactions { get; set; }
     }
 }

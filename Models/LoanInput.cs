@@ -27,7 +27,7 @@ namespace LoanEmiCalculator.Models
         [Display(Name = "Monthly Rate Of Interest")]
         public double MonthlyRateOfInterest { get; set; }
 
-        public double EMI { get; set; }
+        public double emi { get; set; }
 
     }
 }

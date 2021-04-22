@@ -1,0 +1,29 @@
+﻿* {
+    margin:0;
+    padding:0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+.displayNone {
+    display: none;
+}
+
+.tdBg {
+    background: #f7e3e3;
+    color: darkorange;
+    font-weight: bolder;
+}
+
+.colWidth {
+    min-width:50%;
+}
+
+tr,td {
+  /* border:2px solid black;*/
+}
+
+td {
+    white-space: nowrap;
+    width:max-content;
+}

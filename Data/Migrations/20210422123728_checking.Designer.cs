@@ -4,14 +4,16 @@ using LoanEmiCalculator.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LoanEmiCalculator.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210422123728_checking")]
+    partial class checking
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,9 +60,6 @@ namespace LoanEmiCalculator.Data.Migrations
 
                     b.Property<double>("CummulativeInterest")
                         .HasColumnType("float");
-
-                    b.Property<int>("InstallmentNo")
-                        .HasColumnType("int");
 
                     b.Property<double>("Interest")
                         .HasColumnType("float");
