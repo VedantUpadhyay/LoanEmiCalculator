@@ -43,6 +43,7 @@ $().ready(function () {
         }
         else {
             $("#postBackButton").attr("disabled", "true");
+            toastr.warning("All the fields are required..");
            // $("#getDetailsBtn").attr("disabled", "true");
         }
     });
