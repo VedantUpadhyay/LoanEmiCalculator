@@ -27,9 +27,9 @@ namespace LoanEmiCalculator.Controllers
         {
             if(UserInput.emi != 0 && UserInput.LoanAmount != 0 && UserInput.MonthlyRateOfInterest != 0 && UserInput.NoOfInstallments != 0 && UserInput.RateOfInterest != 0)
             {
-                return true;
+                return false;
             }
-            return false;
+            return true;
         }
 
 
@@ -49,17 +49,53 @@ namespace LoanEmiCalculator.Controllers
             
             if(!IsLoanInputEmpty(loanInput))
             {
-                var inputFromDb = _db.LoanInputs.Find(loanInput.LoanAmount, loanInput.RateOfInterest, loanInput.NoOfInstallments);
-                if (inputFromDb != null)
+                var inputFromDb = _db.LoanInputs.FirstOrDefault(obj => obj.LoanAmount == loanInput.LoanAmount && obj.NoOfInstallments == loanInput.NoOfInstallments && loanInput.RateOfInterest == obj.RateOfInterest);
+
+                //No duplication
+                if (inputFromDb == null)
                 {
                     _db.LoanInputs.Add(loanInput);
                     _db.SaveChanges();
 
+                    var getLoanId = _db.LoanInputs.FirstOrDefault(obj => obj.LoanAmount == loanInput.LoanAmount && obj.NoOfInstallments == loanInput.NoOfInstallments && loanInput.RateOfInterest == obj.RateOfInterest);
 
+                    foreach (var item in LoanTransactions)
+                    {
+                        item.LoanId = getLoanId.Id;
+
+                        _db.LoanTransactions.Add(item);
+                    }
+                    _db.SaveChanges();
+                }
+
+                //Duplicate record exists
+                else
+                {
+                    return Json(new
+                    {
+                        inValidateData = false,
+                        isExists = true,
+                        success = false
+                    });
                 }
             }
 
-            return View();
+            //server side model validation
+            else
+            {
+                return Json(new {
+                    inValidateData = true,
+                    isExists = false,
+                    success = false
+                });
+            }
+
+            return Json(new
+            {
+                inValidateData = false,
+                isExists = false,
+                success = true
+            });
         }
 
 

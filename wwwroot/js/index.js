@@ -8,9 +8,17 @@ var validateFlag = false;
 var loanUserInput;
 var loanTransactionsData;
 
+
 $().ready(function () {
+    //$("#getDetailsBtn").attr("disabled", "true");
     $("input").each(function (index, elem) {
         $(elem).removeAttr("value");
+        //$(elem).change(function () {
+        //    $("#postBackButton").attr("disabled", "true");
+        //    if (loanAmount !== "" && roi !== "" && noi !== "") {
+        //        $("#getDetailsBtn").attr("disabled", "false");
+        //    }
+        //});
     });
     $("#LoanAmount").focus();
 
@@ -35,9 +43,15 @@ $().ready(function () {
         }
         else {
             $("#postBackButton").attr("disabled", "true");
+           // $("#getDetailsBtn").attr("disabled", "true");
         }
     });
-    
+
+    $(document).ajaxStart(function () {
+        $('#loading').show();
+    }).ajaxStop(function () {
+        $('#loading').hide();
+    });
 
     $('.dataTables_length').addClass('bs-select');
 
@@ -55,6 +69,13 @@ $().ready(function () {
             },
             success: function (response) {
                 console.log(response);
+
+                if (response.success == true) {
+                    toastr.success('Data Saved Successfully.');
+                }
+                else if (response.success == false) {
+                    toastr.info('Data Already Exists..');
+                }
             }
         });
     });
@@ -74,6 +95,8 @@ $().ready(function () {
                 },
                 success: function (response) {
 
+                    
+
                     loanUserInput = {
                         'loanAmount': loanAmount,
                         'rateOfInterest': roi,
@@ -82,6 +105,10 @@ $().ready(function () {
                         'emi': emiCalculated
                     };
 
+                    if (dataTableExists()) {
+                        emptyDataTable();
+                    }
+                    
                     loanTransactionsData = response.loanTransactions;
                     fillLoanTransactionsTable(response);
 
@@ -95,7 +122,7 @@ $().ready(function () {
 
                     $("#postBackButton").removeAttr("disabled");
                     $("#loanTransactionsTable").removeClass("displayNone");
-                    console.log(typeof (response.loanTransactions));
+                    
                     console.log(response.loanTransactions);
                 }
             });
@@ -132,5 +159,26 @@ function fillLoanTransactionsTable(data) {
         $("#loanTransactionsTable").append(row);
     }
     
+}
 
+function emptyDataTable() {
+    $("#loanTransactionsTable").empty();
+    $("#loanTransactionsTable").append(`<thead>
+                        <tr class="bg-dark text-white">
+                            <th style="width:10px">Installment</th>
+                            <th>Opening</th>
+                            <th>Principal</th>
+                            <th>Interest</th>
+                            <th>EMI</th>
+                            <th>Closing</th>
+                            <th>Cummulative Interest</th>
+                        </tr>
+                    </thead>`);
+}
+
+function dataTableExists() {
+    if ($("#loanTransactionsTable").children().length > 1) {
+        return true;
+    }
+    return false;
 }

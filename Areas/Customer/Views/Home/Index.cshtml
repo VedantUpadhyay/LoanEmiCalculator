@@ -13,19 +13,19 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="LoanAmount"></label>
-                <input type="number" class="form-control" asp-for="LoanAmount">
+                <input required type="number" class="form-control" asp-for="LoanAmount">
                 <span asp-validation-for="LoanAmount" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="RateOfInterest"></label>
-                <input type="number" class="form-control" asp-for="RateOfInterest">
+                <input required type="number" class="form-control" asp-for="RateOfInterest">
                 <span asp-validation-for="RateOfInterest" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="NoOfInstallments"></label>
-                <input type="number" class="form-control" asp-for="NoOfInstallments">
+                <input required type="number" class="form-control" asp-for="NoOfInstallments">
                 <span asp-validation-for="NoOfInstallments" class="text-danger"></span>
             </div>
 
@@ -84,10 +84,14 @@
     </div>
 </div>
 
+<div class="model" id="loading">
+    <!--<p><img src="loading.gif" /> Please Wait</p>-->
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-  
-    <script src="~/js/index.js" defer></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+    <script  type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script  src="~/js/index.js" defer></script>
     <script src="~/js/fancyTable.js"></script>
 }

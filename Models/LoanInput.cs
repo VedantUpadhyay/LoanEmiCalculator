@@ -10,7 +10,7 @@ namespace LoanEmiCalculator.Models
     public class LoanInput
     {
         [Key]
-        public int Key { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Display(Name = "Loan Amount")]
