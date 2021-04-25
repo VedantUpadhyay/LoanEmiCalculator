@@ -113,7 +113,7 @@ namespace LoanEmiCalculator.Controllers
 
         public List<LoanTransaction> PopulateTransactions(LoanInput userInput)
         {
-            List<LoanTransaction> Loantransactions = new List<LoanTransaction>(Convert.ToInt32(userInput.NoOfInstallments * 12));
+            List<LoanTransaction> Loantransactions = new List<LoanTransaction>(Convert.ToInt32(userInput.NoOfInstallments));
             LoanTransaction FirstTransaction = new LoanTransaction
             {
                 Opening = userInput.LoanAmount,

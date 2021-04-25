@@ -1,4 +1,6 @@
-﻿var loanAmount;
+﻿
+
+var loanAmount;
 var roi;
 var noi;
 var monthlyRoi;
@@ -55,7 +57,7 @@ $().ready(function () {
             $("#EMI").removeAttr("disabled");
             // emiCalculated = loanAmount * monthlyRoi * (1 + monthlyRoi) 
             emiCalculated = loanAmount * ((monthlyRoi * Math.pow((1 + monthlyRoi), noi * 12)) / (Math.pow(1 + monthlyRoi, noi * 12) - 1));
-            $("#emi").val(emiCalculated);
+            $("#emi").val(emiCalculated.toFixed(2));
             $("#loanSummaryTable").removeClass("displayNone");
         }
         else {
@@ -79,7 +81,7 @@ $().ready(function () {
             data: {
                 'loanAmount': loanAmount,
                 'rateOfInterest': roi,
-                'noOfInstallments': noi * 12,
+                'noOfInstallments': Math.ceil(noi * 12),
                 'monthlyRateOfInterest': monthlyRoi,
                 'emi': emiCalculated
                 //'loanTransactions': loanTransactionsData
@@ -113,7 +115,7 @@ $().ready(function () {
                 data: {
                     'loanAmount': loanAmount,
                     'rateOfInterest': roi,
-                    'noOfInstallments': noi * 12,
+                    'noOfInstallments': Math.ceil(noi * 12),
                     'monthlyRateOfInterest': monthlyRoi,
                     'emi': emiCalculated
                 },
@@ -124,7 +126,7 @@ $().ready(function () {
                     loanUserInput = {
                         'loanAmount': loanAmount,
                         'rateOfInterest': roi,
-                        'noOfInstallments': noi * 12,
+                        'noOfInstallments': Math.ceil(noi * 12),
                         'monthlyRateOfInterest': monthlyRoi,
                         'emi': emiCalculated
                     };
