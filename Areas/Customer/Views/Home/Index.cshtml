@@ -6,8 +6,8 @@
 
 <link href="~/css/StyleSheet.css" rel="stylesheet" />
 
-<div class="row">
-    <div class="col-4">
+<div class="d-lg-flex flex-row">
+    <div>
 
         <form id="userInput" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -48,7 +48,7 @@
 
     </div>
 
-    <div class="col">
+    <div class="p-lg-3">
         <!--
         <table id="loanSummaryTable" class="displayNone table table-responsive-lg">
             <tr class="bg-primary text-white font-weight-bold">
@@ -68,7 +68,7 @@
         </table>
             -->
 
-        <table id="loanTransactionsTable" class="displayNone table table-sm table-bordered">
+        <table id="loanTransactionsTable" class="ml-lg-4 displayNone table table-sm table-bordered">
             <thead>
                 <tr class="bg-dark text-white">
                     <th style="width:10px">Installment</th>

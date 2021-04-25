@@ -40,13 +40,13 @@ namespace LoanEmiCalculator.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(LoanInput loanInput,List<LoanTransaction> LoanTransactions)
+        public IActionResult Index(LoanInput loanInput)
         {
-           // loanInput.MonthlyRateOfInterest = loanInput.RateOfInterest / 1200;
+            // loanInput.MonthlyRateOfInterest = loanInput.RateOfInterest / 1200;
             /*
             loanInput.emi = loanInput.LoanAmount * ((loanInput.MonthlyRateOfInterest * Math.Pow((1 + loanInput.MonthlyRateOfInterest), loanInput.NoOfInstallments * 12)) / (Math.Pow(1 + loanInput.MonthlyRateOfInterest, loanInput.NoOfInstallments * 12) - 1));
             */
-            
+            List<LoanTransaction> LoanTransactions = PopulateTransactions(loanInput);
             if(!IsLoanInputEmpty(loanInput))
             {
                 var inputFromDb = _db.LoanInputs.FirstOrDefault(obj => obj.LoanAmount == loanInput.LoanAmount && obj.NoOfInstallments == loanInput.NoOfInstallments && loanInput.RateOfInterest == obj.RateOfInterest);
@@ -64,8 +64,9 @@ namespace LoanEmiCalculator.Controllers
                         item.LoanId = getLoanId.Id;
 
                         _db.LoanTransactions.Add(item);
+                        _db.SaveChanges();
                     }
-                    _db.SaveChanges();
+                    
                 }
 
                 //Duplicate record exists
@@ -103,8 +104,16 @@ namespace LoanEmiCalculator.Controllers
         [HttpPost,ActionName("GetDetails")]
         public IActionResult GetEmiDetails(LoanInput userInput)
         {
-            List<LoanTransaction> Loantransactions = new List<LoanTransaction>(Convert.ToInt32(userInput.NoOfInstallments * 12));
+            List<LoanTransaction> Loantransactions = PopulateTransactions(userInput);
 
+            return Json(new {
+                loanTransactions = Loantransactions
+            });
+        }
+
+        public List<LoanTransaction> PopulateTransactions(LoanInput userInput)
+        {
+            List<LoanTransaction> Loantransactions = new List<LoanTransaction>(Convert.ToInt32(userInput.NoOfInstallments * 12));
             LoanTransaction FirstTransaction = new LoanTransaction
             {
                 Opening = userInput.LoanAmount,
@@ -112,7 +121,7 @@ namespace LoanEmiCalculator.Controllers
                 Interest = userInput.LoanAmount * userInput.MonthlyRateOfInterest
             };
             FirstTransaction.Principal = userInput.emi - FirstTransaction.Interest;
-            FirstTransaction.Closing = FirstTransaction.Opening - FirstTransaction.Principal;
+            FirstTransaction.Closing = Math.Round(FirstTransaction.Opening,2) - Math.Round(FirstTransaction.Principal,2);
             FirstTransaction.CummulativeInterest = FirstTransaction.Interest;
             FirstTransaction.InstallmentNo = 1;
             Loantransactions.Add(FirstTransaction);
@@ -138,11 +147,8 @@ namespace LoanEmiCalculator.Controllers
                 Loantransactions.Add(transaction);
             }
 
-            return Json(new {
-                loanTransactions = Loantransactions
-            });
+            return Loantransactions;
         }
-
 
         public IActionResult Privacy()
         {

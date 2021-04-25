@@ -11,6 +11,23 @@ var loanTransactionsData;
 
 $().ready(function () {
     //$("#getDetailsBtn").attr("disabled", "true");
+
+    $('input').keyup(function () {
+        var empty = false;
+        $('form > input').each(function () {
+            if ($(this).val() == '') {
+                empty = true;
+            }
+        });
+        if (empty) {
+            console.log('all fields are empty..');
+            $('#postBackButton').attr('disabled', 'true');
+        }
+        else {
+            $('#postBackButton').removeAttr('disabled');
+        }
+    });
+
     $("input").each(function (index, elem) {
         $(elem).removeAttr("value");
         //$(elem).change(function () {
@@ -43,7 +60,6 @@ $().ready(function () {
         }
         else {
             $("#postBackButton").attr("disabled", "true");
-            toastr.warning("All the fields are required..");
            // $("#getDetailsBtn").attr("disabled", "true");
         }
     });
@@ -65,12 +81,12 @@ $().ready(function () {
                 'rateOfInterest': roi,
                 'noOfInstallments': noi * 12,
                 'monthlyRateOfInterest': monthlyRoi,
-                'emi': emiCalculated,
-                'loanTransactions': loanTransactionsData
+                'emi': emiCalculated
+                //'loanTransactions': loanTransactionsData
             },
             success: function (response) {
                 console.log(response);
-
+                loanTransactionsData = null;
                 if (response.success == true) {
                     toastr.success('Data Saved Successfully.');
                 }
@@ -82,8 +98,15 @@ $().ready(function () {
     });
 
     $("#getDetailsBtn").click(function () {
-        if (validateFlag) {
-            
+
+        loanAmount = $("#LoanAmount").val();
+        roi = $("#RateOfInterest").val();
+        noi = $("#NoOfInstallments").val();
+
+        //console.log(loanAmount, roi, noi);
+
+        if (loanAmount !== "" && roi !== "" && noi !== "") {
+
             $.ajax({
                 method: 'post',
                 url: '/Customer/Home/GetDetails',
@@ -96,7 +119,7 @@ $().ready(function () {
                 },
                 success: function (response) {
 
-                    
+
 
                     loanUserInput = {
                         'loanAmount': loanAmount,
@@ -109,7 +132,7 @@ $().ready(function () {
                     if (dataTableExists()) {
                         emptyDataTable();
                     }
-                    
+
                     loanTransactionsData = response.loanTransactions;
                     fillLoanTransactionsTable(response);
 
@@ -123,10 +146,13 @@ $().ready(function () {
 
                     $("#postBackButton").removeAttr("disabled");
                     $("#loanTransactionsTable").removeClass("displayNone");
-                    
+
                     console.log(response.loanTransactions);
                 }
             });
+        }
+        else {
+            toastr.warning("All the fields are required..");
         }
      
     });
