@@ -81,10 +81,11 @@ $().ready(function () {
             data: {
                 'loanAmount': loanAmount,
                 'rateOfInterest': roi,
-                'noOfInstallments': Math.ceil(noi * 12),
+            /*'noOfInstallments': Math.ceil(noi * 12),*/
+                'noOfInstallments': noi,
                 'monthlyRateOfInterest': monthlyRoi,
-                'emi': emiCalculated
-                //'loanTransactions': loanTransactionsData
+                'emi': emiCalculated,
+                'loanTransactions': loanTransactionsData
             },
             success: function (response) {
                 console.log(response);
@@ -115,7 +116,8 @@ $().ready(function () {
                 data: {
                     'loanAmount': loanAmount,
                     'rateOfInterest': roi,
-                    'noOfInstallments': Math.ceil(noi * 12),
+                /*'noOfInstallments': Math.ceil(noi * 12),*/
+                    'noOfInstallments': noi,
                     'monthlyRateOfInterest': monthlyRoi,
                     'emi': emiCalculated
                 },
@@ -126,7 +128,8 @@ $().ready(function () {
                     loanUserInput = {
                         'loanAmount': loanAmount,
                         'rateOfInterest': roi,
-                        'noOfInstallments': Math.ceil(noi * 12),
+                    /*'noOfInstallments': Math.ceil(noi * 12),*/
+                        'noOfInstallments': noi,
                         'monthlyRateOfInterest': monthlyRoi,
                         'emi': emiCalculated
                     };
