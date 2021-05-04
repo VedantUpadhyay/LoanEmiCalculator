@@ -6,49 +6,88 @@
 
 <link href="~/css/StyleSheet.css" rel="stylesheet" />
 
-<div class="d-lg-flex flex-row">
-    <div>
+<div style="display:inline-block">
+    <div class="form">
 
         <form id="userInput" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="LoanAmount"></label>
-                <input required type="number" class="form-control" asp-for="LoanAmount">
-                <span asp-validation-for="LoanAmount" class="text-danger"></span>
+
+            <span class="dx-field-label">First Name:</span>
+            <div class="dx-field-value" style="width:30%;float:left">
+                <div id="FirstName">
+                </div>
             </div>
 
-            <div class="form-group">
-                <label asp-for="RateOfInterest"></label>
-                <input required type="number" class="form-control" asp-for="RateOfInterest">
-                <span asp-validation-for="RateOfInterest" class="text-danger"></span>
+            <br />
+
+            <span class="dx-field-label">Last Name:</span>
+            <div class="dx-field-value" style="width:30%;float:left;">
+                <div id="LastName">
+                </div>
             </div>
 
-            <div class="form-group">
-                <label asp-for="NoOfInstallments"></label>
-                <input required type="number" class="form-control" asp-for="NoOfInstallments">
-                <span asp-validation-for="NoOfInstallments" class="text-danger"></span>
+            <span class="dx-field-label">Age:</span>
+            <div class="dx-field-value" style="width:40%;float:left;margin-bottom:32px">
+                <div id="AgeSlider"></div>
             </div>
 
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="MonthlyRateOfInterest"></label>
-                <input type="number" class="form-control w-75" disabled asp-for="MonthlyRateOfInterest">
-                <span asp-validation-for="MonthlyRateOfInterest" class="text-danger"></span>
+            <span class="dx-field-label">State:</span>
+            <div class="dx-field-value">
+                <div id="StateDropDown"></div>
             </div>
 
-            <div class="form-group">
-                <label asp-for="emi"></label>
-                <input type="number" class="form-control w-75" disabled asp-for="emi">
-                <span asp-validation-for="emi" class="text-danger"></span>
+            <span class="dx-field-label">City:</span>
+            <div class="dx-field-value">
+                <div id="CityDropdown"></div>
             </div>
-            <button type="button" id="getDetailsBtn" class="btn btn-primary">Get Details</button>
-            <button id="postBackButton" type="button" disabled class="btn btn-success">Save To Database</button>
+
+            <span class="dx-field-label">Transaction Date:</span>
+            <div class="dx-field-value" style="width:30%;float:left">
+                <div id="trDate">
+                </div>
+            </div>
+
+            <span class="dx-field-label">Loan Amount:</span>
+            <div class="dx-field-value" style="width:40%;float:left">
+                <div id="LoanAmount">
+                </div>
+            </div>
+
+            <span class="dx-field-label">Rate Of Interest:</span>
+            <div class="dx-field-value" style="width:40%;float:left">
+                <div id="RateOfInterest">
+                </div>
+            </div>
+
+            <span class="dx-field-label">No Of Installments:</span>
+            <div class="dx-field-value" style="width:40%;float:left">
+                <div id="NoOfInstallments">
+                </div>
+            </div>
+
+            <span class="dx-field-label">Monthly Rate Of Interest:</span>
+            <div class="dx-field-value" style="width:40%;float:left">
+                <div id="MonthlyRateOfInterest">
+                </div>
+            </div>
+
+            <span class="dx-field-label">EMI:</span>
+            <div class="dx-field-value" style="width:40%;float:left">
+                <div id="emi">
+                </div>
+            </div>
+
+            <span class="dx-field-label" style="margin-top:25px;">
+                <div id="getDetailsBtn"></div>
+                <div id="postBackButton"></div>
+            </span>
+
 
         </form>
 
     </div>
 
-    <div class="p-lg-3">
+    <!--<div class="p-lg-3">-->
+    <div>
         <!--
         <table id="loanSummaryTable" class="displayNone table table-responsive-lg">
             <tr class="bg-primary text-white font-weight-bold">
@@ -67,8 +106,7 @@
 
         </table>
             -->
-
-        <table id="loanTransactionsTable" class="ml-lg-5 displayNone table table-sm table-bordered">
+        <!--        <table id="loanTransactionsTable" class="ml-lg-5 displayNone table table-sm table-bordered">
             <thead>
                 <tr class="bg-dark text-white">
                     <th style="width:10px">Installment</th>
@@ -81,6 +119,10 @@
                 </tr>
             </thead>
         </table>
+
+            -->   
+
+        <div id="loanTransactionsTable"></div>
     </div>
 </div>
 
@@ -92,6 +134,7 @@
     <partial name="_ValidationScriptsPartial" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     <script  type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="~/js/data.js"></script>
     <script  src="~/js/index.js" defer></script>
     <script src="~/js/fancyTable.js"></script>
 }

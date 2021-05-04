@@ -5,6 +5,26 @@
 }
 
 
+.dx-field-label {
+    font-weight:bolder;
+}
+
+.dx-field-value input {
+    font-size:medium;
+}
+
+#postBackButton, #getDetailsBtn * {
+    font-size: large;
+}
+
+.dx-datagrid {
+    display:inline-block;
+}
+
+.dx-texteditor-container {
+    border: 0.7px solid;
+}
+
 .displayNone {
     display: none;
 }
@@ -53,6 +73,10 @@ body.loading .model {
    modal element will be visible */
 body.loading .model {
     display: block;
+}
+
+.m-field-label {
+    font-size: larger;
 }
 
 @media screen and (min-width: 950px) {

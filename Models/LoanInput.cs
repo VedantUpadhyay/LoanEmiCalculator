@@ -12,6 +12,18 @@ namespace LoanEmiCalculator.Models
         [Key]
         public int Id { get; set; }
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public int Age { get; set; }
+
+        public string State { get; set; }
+
+        public string City { get; set; }
+
+        public string TransactionDate { get; set; }
+
         [Required]
         [Display(Name = "Loan Amount")]
         public double LoanAmount { get; set; }
